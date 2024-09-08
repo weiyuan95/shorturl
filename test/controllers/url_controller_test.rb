@@ -6,13 +6,37 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
     @existing_url = urls(:one)
   end
 
+  test "GET /:hash - should return 302 and correct redirect_url if :hash has been saved" do
+    get "/#{@existing_url[:hashed_url]}"
+    assert_response :moved_permanently
+    assert_equal @existing_url.target_url, @response.redirect_url
+  end
+
+  test "GET /:hash - should return 302 and correct redirect_url if shortening is successful" do
+    target_url = "https://blog.weiyuan.dev"
+    post "/api/url", params: { target_url: target_url }, as: :json
+    assert_response :success
+
+    saved_url = @response.parsed_body
+    assert_equal target_url, saved_url[:target_url]
+
+    get "/#{saved_url[:hashed_url]}"
+    assert_response :moved_permanently
+    assert_equal target_url, @response.redirect_url
+  end
+
+  test "GET /:hash - should return 404 if :hash is not present" do
+    get "/non_existent_hash"
+    assert_response :not_found
+  end
+
   test "GET /url/:hash - should return 404 if :hash is not present" do
-    get url_url
+    get "/api/url"
     assert_response :not_found
   end
 
   test "GET /url/:hash - should return saved url if :hash exists" do
-    get "/url/#{@existing_url[:hashed_url]}"
+    get "/api/url/#{@existing_url[:hashed_url]}"
 
     assert_response :success
     url = @response.parsed_body
@@ -23,7 +47,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "POST /url - should return 422 when target_url is not in request body" do
-    post url_url
+    post "/api/url"
     assert_response :unprocessable_content
   end
 
@@ -39,7 +63,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
       # Given a target_url
       # When we shorten it
       assert_difference("Url.count") do
-        post url_url, params: { target_url: target_url }, as: :json
+        post "/api/url", params: { target_url: target_url }, as: :json
       end
 
       assert_response :success
@@ -51,7 +75,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
       assert_equal expected_title, saved_url[:title]
 
       # When we query for it with the previously saved hashed_url
-      get "/url/#{saved_url[:hashed_url]}"
+      get "/api/url/#{saved_url[:hashed_url]}"
       assert_response :success
       retrieved_url = @response.parsed_body
 
@@ -63,7 +87,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "POST /url - should return 422 when target_url is invalid" do
-    post url_url, params: { target_url: "http:///abc.com" }, as: :json
+    post "/api/url", params: { target_url: "http:///abc.com" }, as: :json
     assert_response :unprocessable_content
   end
 
@@ -72,7 +96,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
     # which is _extremely_ unlikely.
     # We can stub the salt to be the same as the existing url in the fixture to force a hash collision.
     SecureRandom.stub :uuid_v4, @existing_url.salt do
-      post url_url, params: { target_url: @existing_url.target_url }, as: :json
+      post "/api/url", params: { target_url: @existing_url.target_url }, as: :json
       assert_response :internal_server_error
     end
   end

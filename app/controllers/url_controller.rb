@@ -18,6 +18,18 @@ class UrlController < ApplicationController
     render json: { target_url: url.target_url, title: url.title, hashed_url: url.hashed_url }
   end
 
+  def redirect
+    hash = params[:hash]
+    url = Url.find_by_hashed_url(hash)
+
+    if url.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      return
+    end
+
+    redirect_to url.target_url, status: :moved_permanently, allow_other_host: true
+  end
+
   def create
     target_url = params[:target_url]
 

@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed824445-d85c-4cf5-b593-f9ccb68891dc" name="Changes" comment="feat: Initial MVP&#10;&#10;- No analytics implemented&#10;- Stateful service using sqlite3">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+    <list default="true" id="ed824445-d85c-4cf5-b593-f9ccb68891dc" name="Changes" comment="fix: Re-run bundle install">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/url_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/url_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/url_controller_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/url_controller_test.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="weiyuan95/fix-ci" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="LogFilters">
@@ -64,6 +71,7 @@
     "Test::Unit/Shoulda/Minitest.should raise an error if the target_url is not present in Sha256UrlHasher.executor": "Run",
     "Test::Unit/Shoulda/Minitest.should successfully hash a url in Sha256UrlHasher.executor": "Run",
     "Test::Unit/Shoulda/Minitest.should throw a RuntimeException when too many retries are attempted in Sha256UrlHasher.executor": "Run",
+    "Test::Unit/Shoulda/Minitest.test_GET_/:hash_-_should_return_404_if_:hash_is_not_present.executor": "Run",
     "Test::Unit/Shoulda/Minitest.test_POST_/url_-_should_return_400_when_target_url_is_invalid.executor": "Run",
     "Test::Unit/Shoulda/Minitest.test_POST_/url_-_should_successfully_create_a_new_url_when_target_url_is_in_request_body.executor": "Run",
     "Test::Unit/Shoulda/Minitest.test_can_create.executor": "Run",
@@ -80,7 +88,7 @@
     "Test::Unit/Shoulda/Minitest.test_should_show_url.executor": "Run",
     "Test::Unit/Shoulda/Minitest.url_controller_test.rb.executor": "Run",
     "Test::Unit/Shoulda/Minitest.url_test.rb.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "weiyuan95/redirect",
     "go.import.settings.migrated": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -99,7 +107,7 @@
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Test::Unit/Shoulda/Minitest.url_test.rb">
+  <component name="RunManager" selected="Test::Unit/Shoulda/Minitest.url_controller_test.rb">
     <configuration name="shorturl" type="RailsRunConfigurationType" factoryName="Rails">
       <module name="shorturl" />
       <predefined_log_file enabled="true" id="RUBY_RAILS_SERVER" />
@@ -181,7 +189,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="should throw a RuntimeException when too many retries are attempted in Sha256UrlHasher" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true" nameIsGenerated="true">
+    <configuration name="test_GET_/:hash_-_should_return_404_if_:hash_is_not_present" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true" nameIsGenerated="true">
       <module name="shorturl" />
       <predefined_log_file enabled="true" id="RUBY_TESTUNIT" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-Itest" />
@@ -201,43 +209,10 @@
       </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/test/hasher/sha256_url_hasher_spec.rb" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPTS_PATHS" VALUE="$PROJECT_DIR$/test/hasher/sha256_url_hasher_spec.rb" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/test/controllers/url_controller_test.rb" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPTS_PATHS" VALUE="$PROJECT_DIR$/test/controllers/url_controller_test.rb" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="^Sha256UrlHasher#test_\d+_should throw a RuntimeException when too many retries are attempted$" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_METHOD" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test_can_create" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true" nameIsGenerated="true">
-      <module name="shorturl" />
-      <predefined_log_file enabled="true" id="RUBY_TESTUNIT" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-Itest" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs>
-        <env name="RAILS_ENV" value="test" />
-        <env name="JRUBY_OPTS" value="-X+O" />
-      </envs>
-      <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_BRANCH_COVERAGE="true" ENABLE_FORKED_COVERAGE="true">
-        <COVERAGE_PATTERN ENABLED="true">
-          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
-        </COVERAGE_PATTERN>
-      </EXTENSION>
-      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/test/models/url_test.rb" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPTS_PATHS" VALUE="$PROJECT_DIR$/test/models/url_test.rb" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="" />
-      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="^test_can_create$" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="^test_GET_/:hash_\-_should_return_404_if_:hash_is_not_present$" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_METHOD" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
@@ -313,6 +288,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="url_controller_test.rb" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true" nameIsGenerated="true">
+      <module name="shorturl" />
+      <predefined_log_file enabled="true" id="RUBY_TESTUNIT" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-Itest" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs>
+        <env name="RAILS_ENV" value="test" />
+        <env name="JRUBY_OPTS" value="-X+O" />
+      </envs>
+      <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_BRANCH_COVERAGE="true" ENABLE_FORKED_COVERAGE="true">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$PROJECT_DIR$/test/controllers/url_controller_test.rb" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPTS_PATHS" VALUE="$PROJECT_DIR$/test/controllers/url_controller_test.rb" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="url_test.rb" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true" nameIsGenerated="true">
       <module name="shorturl" />
       <predefined_log_file enabled="true" id="RUBY_TESTUNIT" />
@@ -348,11 +356,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Test::Unit/Shoulda/Minitest.url_controller_test.rb" />
+        <item itemvalue="Test::Unit/Shoulda/Minitest.test_GET_/:hash_-_should_return_404_if_:hash_is_not_present" />
         <item itemvalue="Test::Unit/Shoulda/Minitest.url_test.rb" />
         <item itemvalue="Test::Unit/Shoulda/Minitest.test_should_only_be_to_save_with_hashed_url_is_unique" />
         <item itemvalue="Test::Unit/Shoulda/Minitest.test_should_not_be_able_to_create_with_no_params" />
-        <item itemvalue="Test::Unit/Shoulda/Minitest.test_can_create" />
-        <item itemvalue="Test::Unit/Shoulda/Minitest.should throw a RuntimeException when too many retries are attempted in Sha256UrlHasher" />
       </list>
     </recent_temporary>
   </component>
@@ -374,7 +382,7 @@
       <option name="presentableId" value="Default" />
       <updated>1725693602144</updated>
       <workItem from="1725693603098" duration="655000" />
-      <workItem from="1725694261381" duration="40754000" />
+      <workItem from="1725694261381" duration="44714000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit from `rails new`&#10;&#10;- Actual command ran: `rails new shorturl --skip-action-mailer --skip-action-mailbox --skip-javascript --skip-action-text --skip-active-job --skip-active-storage --skip-active-cable --skip-asset-pipeline --skip-hotwire`">
       <option name="closed" value="true" />
@@ -400,7 +408,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725791925441</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: Initial MVP&#10;&#10;- No analytics implemented&#10;- Stateful service using sqlite3">
+      <option name="closed" value="true" />
+      <created>1725792167384</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725792167384</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: Re-run bundle install">
+      <option name="closed" value="true" />
+      <created>1725792365520</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1725792365520</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,7 +454,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit from `rails new`&#10;&#10;- Actual command ran: `rails new shorturl --skip-action-mailer --skip-action-mailbox --skip-javascript --skip-action-text --skip-active-job --skip-active-storage --skip-active-cable --skip-asset-pipeline --skip-hotwire`" />
     <MESSAGE value="feat: Initial MVP&#10;&#10;- No analytics implemented&#10;- Stateful service using sqlite3" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Initial MVP&#10;&#10;- No analytics implemented&#10;- Stateful service using sqlite3" />
+    <MESSAGE value="fix: Re-run bundle install" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Re-run bundle install" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -452,7 +477,8 @@
     <SUITE FILE_PATH="coverage/shorturl@should_successfully_hash_a_url_in_Sha256UrlHasher.rcov" NAME="should successfully hash a url in Sha256UrlHasher Coverage Results" MODIFIED="1725770723388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
     <SUITE FILE_PATH="coverage/shorturl@should_raise_an_error_if_the_target_url_is_not_present_in_Sha256UrlHasher.rcov" NAME="should raise an error if the target_url is not present in Sha256UrlHasher Coverage Results" MODIFIED="1725772909283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
     <SUITE FILE_PATH="coverage/shorturl@should_throw_a_RuntimeException_when_too_many_retries_are_attempted_in_Sha256UrlHasher.rcov" NAME="should throw a RuntimeException when too many retries are attempted in Sha256UrlHasher Coverage Results" MODIFIED="1725788917450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
-    <SUITE FILE_PATH="coverage/shorturl@url_controller_test_rb.rcov" NAME="url_controller_test.rb Coverage Results" MODIFIED="1725787353823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
+    <SUITE FILE_PATH="coverage/shorturl@test_GET___hash___should_return_404_if__hash_is_not_present.rcov" NAME="test_GET_/:hash_-_should_return_404_if_:hash_is_not_present Coverage Results" MODIFIED="1725802048785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
+    <SUITE FILE_PATH="coverage/shorturl@url_controller_test_rb.rcov" NAME="url_controller_test.rb Coverage Results" MODIFIED="1725802774013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
     <SUITE FILE_PATH="coverage/shorturl@test_should_only_be_to_save_with_hashed_url_is_unique.rcov" NAME="test_should_only_be_to_save_with_hashed_url_is_unique Coverage Results" MODIFIED="1725789553196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
     <SUITE FILE_PATH="coverage/shorturl@test_should_get_index.rcov" NAME="test_should_get_index Coverage Results" MODIFIED="1725701500963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
     <SUITE FILE_PATH="coverage/shorturl@test_should_404_if__hash_is_not_present.rcov" NAME="test_should_404_if_:hash_is_not_present Coverage Results" MODIFIED="1725702004946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="shorturl" />
