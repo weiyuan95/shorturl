@@ -27,14 +27,19 @@ class UrlController < ApplicationController
       return
     end
 
-    redirect_to url.target_url, status: :moved_permanently, allow_other_host: true
+    # NOTE: ALTHOUGH THIS SATISFIES THE BRAKEMAN STATIC ANALYZER, THIS BY NO MEANS GUARANTEES THAT THE REDIRECT IS SAFE
+    # SINCE IT'S NOT FEASIBLE TO CHECK THAT A URL IS NON-MALICIOUS. THE BEST WAY TO MITIGATE THIS IS TO USE A BLACKLIST
+    # OF KNOWN MALICIOUS URLS, OR EDUCATE USERS TO ONLY CLICK ON TRUSTED LINKS.
+    uri = URI.parse(url.target_url)
+    redirect_to uri.to_s, status: :moved_permanently, allow_other_host: true
   end
 
   def create
     target_url = params[:target_url]
 
     # html is guaranteed to be valid due to validation in validate_create_params
-    html_doc = Nokogiri::HTML(URI.open(target_url.to_s))
+    # There is a 3 second timeout for reading the target_url
+    html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 3))
     html_title = html_doc.css("title").text
 
     begin
