@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Google"
+  target_url: "https://google.com"
+  hashed_url: "6oYifE2"
+  salt: "c82eb535-29e5-48b1-a293-bc68a11df464"
+
+two:
+  title: "CoinGecko - Crypto API"
+  target_url: "https://www.coingecko.com/"
+  hashed_url: kJAq9jS
+  salt: "da52533d-ab8b-4d45-ac93-a149f0f43134"

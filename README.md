@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Dependencies
+- Ruby 3.3.5
+- Rails 7.2.1
+- sqlite3 3.43.2
 
-Things you may want to cover:
+Use other versions of these dependencies at your own risk.
 
-* Ruby version
+## Installation
+1. Checkout the repository
+2. bundle exec rake db:create
+3. bundle exec rake db:setup
 
-* System dependencies
+## Running the application
+`bundle exec rails s`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Running tests
+`bundle exec test`

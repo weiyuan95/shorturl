@@ -8,6 +8,12 @@ gem "sqlite3", ">= 1.4"
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# Base62 encoding
+gem "yab62", "~>1.0.1"
+# Parsing HTML
+gem "nokogiri", "~> 1.16.7"
+gem "open-uri", "~> 0.4.1"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
