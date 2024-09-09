@@ -3,6 +3,8 @@
 require "minitest/autorun"
 require "test_helper"
 
+# These suite of tests are testing flows from a user's perspective. Unhappy cases can be found in the individual
+# controller tests.
 class ShortUrlIntegrationTest < ActionDispatch::IntegrationTest
   setup do
     # We do not want the fixture data for our integration test - it should be a clean slate of data
