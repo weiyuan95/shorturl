@@ -5,6 +5,29 @@ class Url < ApplicationRecord
   validates :hashed_url, presence: true, uniqueness: true
   validates :salt, presence: true, uniqueness: true
   validates :title, presence: true
+  attribute :short_url, :string
+  after_initialize :generate_short_url
 
-  # TODO: validate that the target_url is a valid URL with UrlHasher.validate
+  validate :validate_target_url
+
+  private
+
+  def validate_target_url
+    begin
+      UrlHasher.validate(self.target_url)
+    rescue
+      errors.add(:base, "Invalid target_url provided")
+    end
+
+  end
+
+  def generate_short_url
+    if Rails.env.production?
+      url = "https://api.url.weiyuan.dev"
+    else
+      url = "http://localhost:3000"
+    end
+
+    self.short_url = "#{url}/#{self.hashed_url}"
+  end
 end

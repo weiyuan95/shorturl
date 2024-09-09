@@ -15,6 +15,22 @@ class UrlTest < ActiveSupport::TestCase
     assert url.save
   end
 
+  test "should not be able to create if target_url is invalid" do
+    url = Url.new(target_url: "abc1234", hashed_url: "1234", salt: "1234", title: "abc")
+    assert url.invalid?
+    assert_equal "Invalid target_url provided", url.errors.full_messages.first
+  end
+
+  test "should correctly generate short_url" do
+    url = Url.new(target_url: "http://abc1234", hashed_url: "1234", salt: "1234", title: "abc")
+    assert url.save
+    # should exist on the created object
+    assert_equal "http://localhost:3000/1234", url.short_url
+    saved_url = Url.find_by(hashed_url: "1234")
+    # and also when fetched from the database
+    assert_equal "http://localhost:3000/1234", saved_url.short_url
+  end
+
   test "should not save is hashed_url is not unique" do
     url = Url.new(target_url: "http://abc1234", hashed_url: "1234", salt: "1234", title: "abc")
     # the first save would work

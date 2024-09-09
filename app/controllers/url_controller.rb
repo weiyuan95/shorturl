@@ -6,19 +6,6 @@ class UrlController < ApplicationController
   before_action :validate_create_params, only: :create
   after_action :track_redirects, only: :redirect
 
-  def show
-    hash = params[:hash]
-
-    url = Url.find_by_hashed_url(hash)
-
-    if url.nil?
-      render json: { error: "Target URL hash does not exist" }, status: 404
-      return
-    end
-
-    render json: { target_url: url.target_url, title: url.title, hashed_url: url.hashed_url }
-  end
-
   def redirect
     hash = params[:hash]
     url = Url.find_by_hashed_url(hash)
@@ -39,9 +26,15 @@ class UrlController < ApplicationController
     target_url = params[:target_url]
 
     # html is guaranteed to be valid due to validation in validate_create_params
-    # There is a 3 second timeout for reading the target_url
-    html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 3))
-    html_title = html_doc.css("title").text
+    # We set a 1 second timeout for reading the target_url to prevent overly-long requests.
+    # This is a huge bottleneck, since we are blocking the request until the target_url is successfully read.
+    # Whether or not this is can be done asynchronously depends on the product requirements.
+    begin
+      html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 1))
+      html_title = html_doc.css("title").text
+    rescue
+      html_title = "Unknown title"
+    end
 
     begin
       hashed_url = Sha256UrlHasher.hash_url(target_url.to_s)
