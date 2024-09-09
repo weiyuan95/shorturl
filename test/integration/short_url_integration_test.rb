@@ -53,9 +53,9 @@ class ShortUrlIntegrationTest < ActionDispatch::IntegrationTest
       # When we shorten it
       assert_difference("Url.count") do
         post "/api/url", params: { target_url: target_url }, as: :json
+        assert_response :success
       end
 
-      assert_response :success
       saved_url = @response.parsed_body
       # Then the values should be correctly in the response
       assert_equal target_url, saved_url[:target_url]
