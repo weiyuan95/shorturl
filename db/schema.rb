@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_07_085741) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_09_020002) do
+  create_table "hashed_url_visits", force: :cascade do |t|
+    t.string "ip"
+    t.string "country"
+    t.string "hashed_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hashed_url"], name: "index_hashed_url_visits_on_hashed_url"
+  end
+
   create_table "urls", force: :cascade do |t|
     t.string "title"
     t.string "target_url"

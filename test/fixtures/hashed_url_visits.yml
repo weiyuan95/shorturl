@@ -1,0 +1,16 @@
+# explicitly set the ids so that the fixtures can be sorted by it
+one:
+  id: 1
+  ip: "8.8.4.4"
+  country: "Singapore"
+  hashed_url: "6oYifE2"
+two:
+  id: 2
+  ip: "127.0.0.1"
+  country: "Unknown"
+  hashed_url: "kJAq9jS"
+three:
+  id: 3
+  ip: "0.0.0.0"
+  country: "Unknown"
+  hashed_url: "kJAq9jS"

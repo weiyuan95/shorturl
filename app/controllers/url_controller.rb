@@ -4,6 +4,7 @@ class UrlController < ApplicationController
   # Public endpoint, we do not worry about authn/z for now
   skip_before_action :verify_authenticity_token
   before_action :validate_create_params, only: :create
+  after_action :track_redirects, only: :redirect
 
   def show
     hash = params[:hash]
@@ -70,6 +71,8 @@ class UrlController < ApplicationController
     end
   end
 
+  private
+
   def validate_create_params
     target_url = params[:target_url]
 
@@ -85,5 +88,36 @@ class UrlController < ApplicationController
     end
 
     true
+  end
+
+  # A possible improvement is to make this a background job, since the result of this does not matter
+  # to the user and can be done asynchronously.
+  # We only save the country here and ip address here, however this can be extended to save more information
+  # such as lat/long. This is not a particularly extensible way to track visits,
+  # something more robust would be a gem like Ahoy https://github.com/ankane/ahoy .
+  # However, this comes at the cost of making the tracked information more generic, and we would be unable to index
+  # on fields like the hashed_url.
+  def track_redirects
+    # only track redirects for successful redirects
+    if response.status != 301
+      return
+    end
+
+    ip = request.remote_ip
+    hashed_url = params[:hash]
+    geolocation = Geocoder.search(ip)
+
+    # If we cannot get the country, we default to "Unknown"
+    if geolocation.first.country.nil?
+      country = "Unknown"
+    else
+      country = geolocation.first.country
+    end
+
+    if HashedUrlVisit.new(hashed_url: hashed_url, ip: ip, country: country).save
+      logger.info "Successfully saved visit for hashed_url #{hashed_url}"
+    else
+      logger.error "Failed to save visit for hashed_url #{hashed_url}"
+    end
   end
 end

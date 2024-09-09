@@ -24,7 +24,7 @@ class UrlTest < ActiveSupport::TestCase
     assert_not new_url.save
   end
 
-  test "should not save is salt is not unique" do
+  test "should not save if salt is not unique" do
     url = Url.new(target_url: "http://abc1234", hashed_url: "1234", salt: "1234", title: "abc")
     # the first save would work
     assert url.save
