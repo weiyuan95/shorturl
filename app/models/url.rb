@@ -5,4 +5,6 @@ class Url < ApplicationRecord
   validates :hashed_url, presence: true, uniqueness: true
   validates :salt, presence: true, uniqueness: true
   validates :title, presence: true
+
+  # TODO: validate that the target_url is a valid URL with UrlHasher.validate
 end
