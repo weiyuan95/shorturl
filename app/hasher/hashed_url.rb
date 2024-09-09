@@ -9,6 +9,5 @@ module HashedUrl
       @target_url = target_url
       @salt = salt
     end
-
   end
 end
