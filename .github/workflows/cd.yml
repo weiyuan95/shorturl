@@ -12,12 +12,15 @@ jobs:
     env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+        TEST: ${{ secrets.TEST }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Login to ECR
-        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
+        run: |
+          echo $TEST
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
 
       - name: Build docker image
         run: docker build -t shorturl/shorturl-be .
