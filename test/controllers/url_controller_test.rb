@@ -85,4 +85,14 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "POST /url - should successfully create a new url for websites with empty titles" do
+    target_url = "https://sg.shp.ee/FaJHwYr"
+    expected_title = "Unknown title"
+    post "/api/url", params: { target_url: target_url }, as: :json
+    assert_response :success
+    saved_url = @response.parsed_body
+    assert_equal target_url, saved_url[:target_url]
+    assert_equal expected_title, saved_url[:title]
+  end
 end
