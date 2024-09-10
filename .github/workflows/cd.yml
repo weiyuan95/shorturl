@@ -5,20 +5,36 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy_to_ecr:
+  push_to_ecr:
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-skip-session-tagging: true
+          role-to-assume: arn:aws:iam::257394466244:role/github-ecr-poweruser
+          aws-region: us-east-1
+
+      - name: Login to ECR
+        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
+
       - name: Build docker image
         run: docker build -t shorturl/shorturl-be .
 
-      - name: Push to ECR
-        uses: jwalton/gh-ecr-push@v2
-        with:
-          access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
-          region: us-east-1
-          local-image: shorturl/shorturl-be
-          image: shorturl/shorturl-be:latest, shorturl/shorturl-be:${{ github.sha }}
+      - name: Push latest image
+        run: |
+          docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+
+      - name: Push image with github sha
+        run: |
+          sha_short=$(git rev-parse --short HEAD)
+          docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:$sha_short
+          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:$sha_short
