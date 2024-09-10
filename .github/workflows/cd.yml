@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-
 jobs:
   push_to_ecr:
     permissions:
@@ -38,5 +37,6 @@ jobs:
 
       - name: Push image with github sha
         run: |
-          docker tag shorturl/shorturl-be:${{ github.sha }} public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
-          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
+          sha_short=$(git rev-parse --short HEAD)
+          docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:$sha_short
+          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:$sha_short
