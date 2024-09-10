@@ -18,6 +18,7 @@ jobs:
 
       - name: Login to ECR
         run: |
+          aws sts get-caller-identity --output json
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
 
       - name: Build docker image
