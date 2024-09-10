@@ -16,15 +16,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Login to ECR
+        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
+
       - name: Build docker image
         run: docker build -t shorturl/shorturl-be .
 
       - name: Tag built image
         run: |
           docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
-          docker tag shorturl/shorturl-be:${{ github.sha }} public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
+#          docker tag shorturl/shorturl-be:${{ github.sha }} public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
 
       - name: Push tagged images
         run: |
           docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
-          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
+#          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
