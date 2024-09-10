@@ -1,12 +1,17 @@
 name: CD
 
 on:
-  push:
+#  TODO: change from pull_request: to push:
+#  This is only for testing purposes
+  pull_request:
     branches: [ main ]
 
 jobs:
-  deploy_to_ecr:
+  push_to_ecr:
     runs-on: ubuntu-latest
+    env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -14,11 +19,12 @@ jobs:
       - name: Build docker image
         run: docker build -t shorturl/shorturl-be .
 
-      - name: Push to ECR
-        uses: jwalton/gh-ecr-push@v2
-        with:
-          access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
-          region: us-east-1
-          local-image: shorturl/shorturl-be
-          image: shorturl/shorturl-be:latest, shorturl/shorturl-be:${{ github.sha }}
+      - name: Tag built image
+        run: |
+          docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+          docker tag shorturl/shorturl-be:${{ github.sha }} public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
+
+      - name: Push tagged images
+        run: |
+          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
