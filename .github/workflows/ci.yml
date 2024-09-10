@@ -2,8 +2,6 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: [ main ]
 
 jobs:
   scan_ruby:
@@ -64,3 +62,9 @@ jobs:
           RAILS_ENV: test
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+    docker-build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Build Docker image
+          run: docker build -t shorturl/shorturl-be .
