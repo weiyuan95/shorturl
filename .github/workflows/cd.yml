@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: AWS caller identity
-        run: aws sts get-caller-identity --output json
+        run: foo=`aws sts get-caller-identity --output json` && echo $foo
 
       - name: Login to ECR
         run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
