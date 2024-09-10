@@ -64,11 +64,8 @@ jobs:
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
-    docker-build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-
-        - name: Build Docker image
-          run: docker build -t shorturl/shorturl-be .
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docker image
+        run: docker build -t shorturl/shorturl-be .
