@@ -25,9 +25,11 @@ jobs:
       - name: Tag built image
         run: |
           docker tag shorturl/shorturl-be:latest public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+#          TODO: add back in when pushing to main
 #          docker tag shorturl/shorturl-be:${{ github.sha }} public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
 
       - name: Push tagged images
         run: |
           docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:latest
+#          TODO: add back in when pushing to main
 #          docker push public.ecr.aws/o8i6i1a1/shorturl/shorturl-be:${{ github.sha }}
