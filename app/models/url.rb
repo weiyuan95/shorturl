@@ -18,7 +18,6 @@ class Url < ApplicationRecord
     rescue
       errors.add(:base, "Invalid target_url provided")
     end
-
   end
 
   def generate_short_url
