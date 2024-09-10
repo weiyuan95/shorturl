@@ -21,7 +21,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: github-ecr-poweruser
+          role-skip-session-tagging: true
+          role-to-assume: arn:aws:iam::257394466244:role/github-ecr-poweruser
           aws-region: us-east-1
 
       - name: Login to ECR
