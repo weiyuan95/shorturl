@@ -20,6 +20,7 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
     assert_equal @existing_url[:target_url], url[:target_url]
     assert_equal @existing_url[:title], url[:title]
     assert_equal @existing_url[:hashed_url], url[:hashed_url]
+    assert_equal "http://localhost:3000/#{@existing_url[:hashed_url]}", url[:short_url]
   end
 
   test "GET /:hash - should return 302 and correct redirect_url if :hash has been saved" do

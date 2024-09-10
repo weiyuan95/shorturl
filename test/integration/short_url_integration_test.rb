@@ -74,6 +74,7 @@ class ShortUrlIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal target_url, retrieved_url[:target_url]
       assert_equal expected_title, retrieved_url[:title]
       assert_equal expected_hash, retrieved_url[:hashed_url]
+      assert_equal "http://localhost:3000/#{expected_hash}", retrieved_url[:short_url]
     end
   end
 end

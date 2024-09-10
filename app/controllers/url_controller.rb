@@ -16,7 +16,7 @@ class UrlController < ApplicationController
       return
     end
 
-    render json: { target_url: url.target_url, title: url.title, hashed_url: url.hashed_url }
+    render json: url
   end
 
   def redirect
