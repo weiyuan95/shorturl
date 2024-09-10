@@ -6,6 +6,19 @@ class UrlController < ApplicationController
   before_action :validate_create_params, only: :create
   after_action :track_redirects, only: :redirect
 
+  def show
+    hash = params[:hash]
+
+    url = Url.find_by_hashed_url(hash)
+
+    if url.nil?
+      render json: { error: "Target URL hash does not exist" }, status: 404
+      return
+    end
+
+    render json: url
+  end
+
   def redirect
     hash = params[:hash]
     url = Url.find_by_hashed_url(hash)

@@ -55,13 +55,6 @@ class ShortUrlIntegrationTest < ActionDispatch::IntegrationTest
       assert_difference("Url.count") do
         post "/api/url", params: { target_url: target_url }, as: :json
         assert_response :success
-        saved_url = @response.parsed_body
-        # Then the values should be correctly in the response
-        assert_equal target_url, saved_url[:target_url]
-        assert_equal expected_hash, saved_url[:hashed_url]
-        assert_equal stubbed_uuid, saved_url[:salt]
-        assert_equal expected_title, saved_url[:title]
-        assert_equal "http://localhost:3000/#{expected_hash}", saved_url[:short_url]
       end
 
       saved_url = @response.parsed_body
@@ -70,6 +63,18 @@ class ShortUrlIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal expected_hash, saved_url[:hashed_url]
       assert_equal stubbed_uuid, saved_url[:salt]
       assert_equal expected_title, saved_url[:title]
+      assert_equal "http://localhost:3000/#{expected_hash}", saved_url[:short_url]
+
+      # When we query for it with the previously saved hashed_url
+      get "/api/url/#{saved_url[:hashed_url]}"
+      assert_response :success
+      retrieved_url = @response.parsed_body
+
+      # Then the values should have been correctly saved and returned
+      assert_equal target_url, retrieved_url[:target_url]
+      assert_equal expected_title, retrieved_url[:title]
+      assert_equal expected_hash, retrieved_url[:hashed_url]
+      assert_equal "http://localhost:3000/#{expected_hash}", retrieved_url[:short_url]
     end
   end
 end

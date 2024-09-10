@@ -6,6 +6,23 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
     @existing_url = urls(:one)
   end
 
+  test "GET /url/:hash - should return 404 if :hash is not present" do
+    get "/api/url"
+    assert_response :not_found
+  end
+
+  test "GET /url/:hash - should return saved url if :hash exists" do
+    get "/api/url/#{@existing_url[:hashed_url]}"
+
+    assert_response :success
+    url = @response.parsed_body
+
+    assert_equal @existing_url[:target_url], url[:target_url]
+    assert_equal @existing_url[:title], url[:title]
+    assert_equal @existing_url[:hashed_url], url[:hashed_url]
+    assert_equal "http://localhost:3000/#{@existing_url[:hashed_url]}", url[:short_url]
+  end
+
   test "GET /:hash - should return 302 and correct redirect_url if :hash has been saved" do
     # Ensure that the visit has been saved
     assert_difference("HashedUrlVisit.count") do
