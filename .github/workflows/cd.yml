@@ -16,9 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify AWS-CLI
-        run: aws sts get-caller-identity
-
       - name: Login to ECR
         run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
 
