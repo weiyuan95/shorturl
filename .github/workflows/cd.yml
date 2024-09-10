@@ -16,10 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: AWS caller identity
+        run: aws sts get-caller-identity --output json
+
       - name: Login to ECR
-        run: |
-          aws sts get-caller-identity --output json
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
+        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o8i6i1a1
 
       - name: Build docker image
         run: docker build -t shorturl/shorturl-be .
