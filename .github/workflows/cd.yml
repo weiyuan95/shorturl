@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy_to_ecr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build -t shorturl/shorturl-be .
+
+      - name: Push to ECR
+        uses: jwalton/gh-ecr-push@v2
+        with:
+          access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          local-image: shorturl/shorturl-be
+          image: shorturl/shorturl-be:latest, shorturl/shorturl-be:${{ github.sha }}
