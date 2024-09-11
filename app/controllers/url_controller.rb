@@ -45,15 +45,15 @@ class UrlController < ApplicationController
     html_title = "Unknown title"
     logger.info "Fetching title for target_url #{target_url}"
     begin
-      html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 1))
+      html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 1, open_timeout: 1))
 
       parsed_title = html_doc.css("title").text
 
       if parsed_title.is_a? String and !parsed_title.empty?
         html_title = parsed_title
       end
-    rescue
-      # Ignored since we already defaulting the value to "Unknown title" above
+    rescue => e
+      logger.error "Failed to fetch title for target_url #{target_url} reason: #{e.message}"
     end
 
     logger.info "Hashing target_url #{target_url}"
@@ -69,7 +69,6 @@ class UrlController < ApplicationController
       return
     end
 
-    logger.info "Creating new URL with hashed_url #{hashed_url.hashed_url}"
     new_url = Url.new(target_url: hashed_url.target_url, hashed_url: hashed_url.hashed_url, salt: hashed_url.salt, title: html_title)
 
     if new_url.invalid?
