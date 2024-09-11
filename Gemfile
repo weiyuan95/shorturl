@@ -18,7 +18,7 @@ gem "geocoder"
 # CORS helper
 gem "rack-cors", "~> 2.0"
 # Manage environment variables
-gem "dotenv", groups: [:development, :test]
+gem "dotenv", groups: [ :development, :test ]
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
