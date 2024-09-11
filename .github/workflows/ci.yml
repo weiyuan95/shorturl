@@ -78,7 +78,7 @@ jobs:
         env:
           RAILS_ENV: test
           # should match the values above in the service container
-          DB_HOST: postgres
+          DB_HOST: localhost
           DB_USERNAME: shorturl
           DB_PASSWORD: postgres
           # REDIS_URL: redis://localhost:6379/0
