@@ -17,10 +17,12 @@ Run the Postgres container
 
 ## Installation
 1. Checkout the repository
-2. `bundle exec rake db:setup`
+2. `bundle install`
 
 ## Running the application
-`bundle exec rails s`
+- `bundle exec rake db:setup`
+- `bundle exec rails s`
 
 ## Running tests
-`bundle exec test`
+- `bundle exec rake db:create RAILS_ENV=test`
+- `bin/rails t`

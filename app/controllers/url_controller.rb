@@ -43,6 +43,7 @@ class UrlController < ApplicationController
     # This is a huge bottleneck, since we are blocking the request until the target_url is successfully read.
     # Whether or not this is can be done asynchronously depends on the product requirements.
     html_title = "Unknown title"
+    logger.info "Fetching title for target_url #{target_url}"
     begin
       html_doc = Nokogiri::HTML(URI.open(target_url.to_s, read_timeout: 1))
 
@@ -55,6 +56,7 @@ class UrlController < ApplicationController
       # Ignored since we already defaulting the value to "Unknown title" above
     end
 
+    logger.info "Hashing target_url #{target_url}"
     begin
       hashed_url = Sha256UrlHasher.hash_url(target_url.to_s)
     rescue ArgumentError
@@ -67,6 +69,7 @@ class UrlController < ApplicationController
       return
     end
 
+    logger.info "Creating new URL with hashed_url #{hashed_url.hashed_url}"
     new_url = Url.new(target_url: hashed_url.target_url, hashed_url: hashed_url.hashed_url, salt: hashed_url.salt, title: html_title)
 
     if new_url.invalid?
@@ -74,6 +77,7 @@ class UrlController < ApplicationController
       return
     end
 
+    logger.info "Saving new URL with hashed_url #{hashed_url.hashed_url}"
     begin
       new_url.save!
       render json: new_url, status: 200
@@ -81,6 +85,7 @@ class UrlController < ApplicationController
       logger.error e.message
       render json: { error: "Failed to save URL" }, status: 500
     end
+    logger.info "Successfully saved new URL with hashed_url #{hashed_url.hashed_url}"
   end
 
   private
