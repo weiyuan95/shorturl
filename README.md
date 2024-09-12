@@ -1,4 +1,6 @@
-# README
+# Introduction
+Please refer to https://url.weiyuan.dev/2oBya2Yr for the full documentation.
+URL shortening: https://url.weiyuan.dev/3EBjZ0Ls
 
 ## Dependencies
 - Ruby 3.1.0

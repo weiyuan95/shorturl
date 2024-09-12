@@ -24,7 +24,7 @@ class AnalyticsControllerTest < ActionDispatch::IntegrationTest
     HashedUrlVisit.stub(:all, -> { raise "Error with ActiveRecord query" }) do
       get "/api/analytics/url/raw"
       assert_response :internal_server_error
-      assert_equal "Error with ActiveRecord query", @response.parsed_body["error"]
+      assert_equal "Unexpected error", @response.parsed_body["error"]
     end
   end
 
@@ -42,7 +42,7 @@ class AnalyticsControllerTest < ActionDispatch::IntegrationTest
     HashedUrlVisit.stub(:group, ->(_args) { raise "Error with ActiveRecord query" }) do
       get "/api/analytics/url/clicks"
       assert_response :internal_server_error
-      assert_equal "Error with ActiveRecord query", @response.parsed_body["error"]
+      assert_equal "Unexpected error", @response.parsed_body["error"]
     end
   end
 end
