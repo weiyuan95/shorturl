@@ -36,9 +36,9 @@ class UrlController < ApplicationController
   end
 
   def create
+    # URL is guaranteed to be valid due to validation in validate_create_params
     target_url = params[:target_url]
 
-    # URL is guaranteed to be valid due to validation in validate_create_params
     # We set a 1 second timeout for reading the target_url to prevent overly-long requests.
     # This is a huge bottleneck, since we are blocking the request until the target_url is successfully read.
     # Whether or not this is can be done asynchronously depends on the product requirements.
@@ -63,16 +63,17 @@ class UrlController < ApplicationController
       # should never hit this case, but we code defensively
       render json: { error: "Invalid target_url provided" }, status: 400
       return
-    rescue RuntimeError => e
+    rescue => e
       logger.error "Unexpected error when hashing target_url #{e.message}"
-      render json: { error: "Failed to hash target_url" }, status: 500
+      render json: { error: "Failed to shorten target_url" }, status: 500
       return
     end
 
     new_url = Url.new(target_url: hashed_url.target_url, hashed_url: hashed_url.hashed_url, salt: hashed_url.salt, title: html_title)
 
     if new_url.invalid?
-      render json: { error: new_url.errors.full_messages }, status: 400
+      logger.error "Failed to validate URL with errors #{new_url.errors.full_messages}"
+      render json: { error: "Failed to shorten target_url" }, status: 500
       return
     end
 
@@ -80,9 +81,9 @@ class UrlController < ApplicationController
     begin
       new_url.save!
       render json: new_url, status: 200
-    rescue e
-      logger.error e.message
-      render json: { error: "Failed to save URL" }, status: 500
+    rescue => e
+      logger.error "Failed to save URL with error #{e.message}"
+      render json: { error: "Failed to shorten target_url" }, status: 500
     end
     logger.info "Successfully saved new URL with hashed_url #{hashed_url.hashed_url}"
   end
@@ -108,9 +109,10 @@ class UrlController < ApplicationController
 
   # A possible improvement is to make this a background job, since the result of this does not matter
   # to the user and can be done asynchronously.
-  # We only save the country here and ip address here, however this can be extended to save more information
-  # such as lat/long. This is not a particularly extensible way to track visits,
-  # something more robust would be a gem like Ahoy https://github.com/ankane/ahoy .
+  # We only save the country and ip address here, however this can be extended to save more information
+  # such as lat/long.
+  # This is not a particularly extensible way to track visits, something more robust would
+  # be a gem like Ahoy https://github.com/ankane/ahoy .
   # However, this comes at the cost of making the tracked information more generic, and we would be unable to index
   # on fields like the hashed_url.
   # Note that bot visits (eg. via curl, Postman, etc) are also tracked.

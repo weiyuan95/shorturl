@@ -1,5 +1,5 @@
 # This class acts as a 'soft' interface since ruby is not a statically typed language.
-# When this is extended to a class, the class is expected to implement the hash_function method.
+# When this is extended to a class, the class is expected to implement the `hash_function` method.
 class UrlHasher
   # @param [String] target_url
   # @return [HashedUrl::Url] A data class containing the hashed_url, target_url, and salt.
@@ -19,6 +19,7 @@ class UrlHasher
     unless uri.host.present?
       raise ArgumentError, "Invalid target_url provided"
     end
+    # Catch all for unexpected errors when parsing the URI
   rescue URI::InvalidURIError
     raise ArgumentError, "Invalid target_url provided"
   end

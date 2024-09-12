@@ -28,7 +28,6 @@ class Sha256UrlHasher < UrlHasher
       base62_hashed_target_url = YAB62.encode62(hash_as_decimal)
 
       # check if this string already exists in the database
-      # TODO: Use redis bloom filter for this check
       if Url.find_by_hashed_url(base62_hashed_target_url)
         # if it does, repeat the process until there is no collision, or until the max retries is reached
         return attempt_hash(target_url, retries - 1)

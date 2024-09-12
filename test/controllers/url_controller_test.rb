@@ -44,11 +44,13 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
   test "POST /url - should return 422 when target_url is not in request body" do
     post "/api/url"
     assert_response :unprocessable_content
+    assert_equal "Target URL is required", @response.parsed_body["error"]
   end
 
   test "POST /url - should return 422 when target_url is invalid" do
     post "/api/url", params: { target_url: "http:///abc.com" }, as: :json
     assert_response :unprocessable_content
+    assert_equal "Invalid target_url provided", @response.parsed_body["error"]
   end
 
   test "POST /url - should return 500 when failed to hash target_url" do
@@ -58,6 +60,42 @@ class UrlControllerTest < ActionDispatch::IntegrationTest
     SecureRandom.stub :uuid_v4, @existing_url.salt do
       post "/api/url", params: { target_url: @existing_url.target_url }, as: :json
       assert_response :internal_server_error
+      assert_equal "Failed to shorten target_url", @response.parsed_body["error"]
+    end
+  end
+
+  test "POST /url - should return 500 when Sha256UrlHasher throws an error" do
+    # The only possibility for this error to be thrown is if we hit a hash_collision 20 times in a row,
+    # which is _extremely_ unlikely.
+    # We can stub the salt to be the same as the existing url in the fixture to force a hash collision.
+    Sha256UrlHasher.stub :hash_url, ->(_args) { raise "error" } do
+      post "/api/url", params: { target_url: "http://google.com" }, as: :json
+      assert_response :internal_server_error
+      assert_equal "Failed to shorten target_url", @response.parsed_body["error"]
+    end
+  end
+
+  test "POST /url - should return 500 when Url has invalid params" do
+    mock_url = Minitest::Mock.new
+    mock_url.expect :invalid?, true
+    mock_url.expect :errors, ActiveModel::Errors.new("Some error")
+
+    Url.stub :new, mock_url do
+      post "/api/url", params: { target_url: "http://google.com" }, as: :json
+      assert_response :internal_server_error
+      assert_equal "Failed to shorten target_url", @response.parsed_body["error"]
+    end
+  end
+
+  test "POST /url - should return 500 when Url cannot be saved" do
+    mock_url = Minitest::Mock.new
+    mock_url.expect :invalid?, false
+    mock_url.expect :save!, -> { raise "Save error" }
+
+    Url.stub :new, mock_url do
+      post "/api/url", params: { target_url: "http://google.com" }, as: :json
+      assert_response :internal_server_error
+      assert_equal "Failed to shorten target_url", @response.parsed_body["error"]
     end
   end
 
