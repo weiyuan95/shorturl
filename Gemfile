@@ -12,7 +12,7 @@ gem "jbuilder"
 gem "yab62", "~>1.0.1"
 # Parsing HTML
 gem "nokogiri", "~> 1.16.7"
-gem "open-uri", "~> 0.4.1"
+gem "open-uri", "~> 0.5.0"
 # Request tracking
 gem "geocoder"
 # CORS helper
