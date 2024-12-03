@@ -11,7 +11,7 @@ gem "jbuilder"
 # Base62 encoding
 gem "yab62", "~>1.0.1"
 # Parsing HTML
-gem "nokogiri", "~> 1.16.7"
+gem "nokogiri", "~> 1.16.8"
 gem "open-uri", "~> 0.4.1"
 # Request tracking
 gem "geocoder"
